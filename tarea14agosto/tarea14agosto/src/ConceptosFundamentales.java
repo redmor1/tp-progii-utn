@@ -1,4 +1,3 @@
-
 class Humane {
 
   private String nombre;
@@ -59,6 +58,18 @@ class Cliente extends Humane {
     return "\n" + super.toString() + "\nMayorista: " + this.mayorista;
   }
 
+}
+
+class Producto {
+  private String nombre;
+  private float precio;
+  private int cantidad;
+
+  public Producto(String nombre, float precio, int cantidad) {
+    this.nombre = nombre;
+    this.precio = precio;
+    this.cantidad = cantidad;
+  }
 }
 
 class ConceptosFundamentales {
