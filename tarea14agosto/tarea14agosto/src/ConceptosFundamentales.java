@@ -76,6 +76,28 @@ class Producto {
   }
 }
 
+class Transaccion {
+  private Producto[] productos;
+  private float montoTotal;
+  private Caja caja;
+
+  public Transaccion(Producto[] productos, float montoTotal, Caja caja) {
+    this.productos = productos;
+    this.montoTotal = montoTotal;
+    this.caja = caja;
+  }
+
+  public String toString() {
+    String productosString = "";
+
+    for (int i = 0; i < this.productos.length; i++) {
+      productosString += this.productos[i].toString() + "\n";
+    }
+    return "Lista de productos: " + productosString + "\nMonto total: " + this.montoTotal;
+  }
+
+}
+
 class ConceptosFundamentales {
   public static void main(String[] args) {
 
