@@ -70,6 +70,10 @@ class Producto {
     this.precio = precio;
     this.cantidad = cantidad;
   }
+
+  public String toString() {
+    return "Nombre: " + this.nombre + "\nPrecio: " + this.precio + "\n Cantidad: " + this.cantidad;
+  }
 }
 
 class ConceptosFundamentales {
