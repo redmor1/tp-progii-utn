@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 class Humane {
 
   private String nombre;
@@ -26,7 +29,7 @@ class Empleado extends Humane {
   }
 
   public String toString() {
-    return "\n" + super.toString() + "\nSueldo: " + this.sueldo;
+    return "\n" + super.toString();
   }
 }
 
@@ -40,7 +43,7 @@ class Caja {
   }
 
   public String toString() {
-    return this.empleado.toString() + "\nNro de caja: " + this.nroCaja;
+    return "\nEmpleado: " + this.empleado.toString() + "\nNro de caja: " + this.nroCaja;
   }
 
 }
@@ -55,7 +58,7 @@ class Cliente extends Humane {
   }
 
   public String toString() {
-    return "\n" + super.toString() + "\nMayorista: " + this.mayorista;
+    return super.toString() + "\nMayorista: " + this.mayorista;
   }
 
 }
@@ -69,6 +72,10 @@ class Producto {
     this.nombre = nombre;
     this.precio = precio;
     this.cantidad = cantidad;
+  }
+
+  public float calcularPrecioTotal() {
+    return this.precio * this.cantidad;
   }
 
   public void setNombre(String nombre) {
@@ -96,37 +103,65 @@ class Producto {
   }
 
   public String toString() {
-    return "Nombre: " + this.nombre + "\nPrecio: " + this.precio + "\n Cantidad: " + this.cantidad;
+    return "Nombre:" + this.nombre + " Cantidad:" + this.cantidad + " Precio:$" + this.precio;
   }
+
 }
 
 class Transaccion {
-  private Producto[] productos;
-  private float montoTotal;
+  private List<Producto> productos;
   private Caja caja;
+  private Cliente cliente;
+  private float montoTotal;
 
-  public Transaccion(Producto[] productos, float montoTotal, Caja caja) {
+  public Transaccion(List<Producto> productos, Cliente cliente, Caja caja) {
     this.productos = productos;
-    this.montoTotal = montoTotal;
     this.caja = caja;
+    this.cliente = cliente;
+    this.montoTotal = calcularMontoTotal();
+  }
+
+  public float calcularMontoTotal() {
+    float total = 0;
+    for (Producto producto : productos) {
+      total += producto.calcularPrecioTotal();
+    }
+    return total;
   }
 
   public String toString() {
     String productosString = "";
 
-    for (int i = 0; i < this.productos.length; i++) {
-      productosString += this.productos[i].toString() + "\n";
+    for (Producto producto : this.productos) {
+      productosString += producto.toString() + "\n";
     }
-    return "Lista de productos: " + productosString + "\nMonto total: " + this.montoTotal;
+    return "Cliente:\n" + this.cliente.toString() + "\n" + this.caja.toString() + "\n\nLista de productos:\n"
+        + productosString + "\nMonto total: $" + this.montoTotal;
   }
-
 }
 
 class ConceptosFundamentales {
   public static void main(String[] args) {
 
-    Cliente cliente = new Cliente("Juan", "Perez", 12345678, true);
-    System.out.println(cliente);
-  }
+    // Crear empleado y caja
+    Empleado empleado = new Empleado("Pepe", "Lopez", 12345678, 2000);
+    Caja caja = new Caja(empleado, 1);
 
+    // Crear cliente
+    Cliente cliente = new Cliente("Juan", "Perez", 12345678, true);
+
+    // Crear productos
+    List<Producto> productos = new ArrayList<>();
+    productos.add(new Producto("Pan", 100, 10));
+    productos.add(new Producto("Leche", 80, 1));
+    productos.add(new Producto("Queso", 200, 1));
+
+    // Crear transaccion
+    Transaccion transaccion = new Transaccion(productos, cliente, caja);
+
+    // Mostrar resultado
+    System.out.println("\n--- Resumen de la compra ---");
+    System.out.println(transaccion);
+
+  }
 }
